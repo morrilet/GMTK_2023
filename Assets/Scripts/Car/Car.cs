@@ -6,23 +6,42 @@ public class Car : MonoBehaviour
 {
     Rigidbody rigidbody;
     CarFrontCheck carFrontCheck;
+    Transform[] nodeMap;
+    [SerializeField] int currentNode = 0;
     bool moving = true;
 
     [SerializeField] int speed = 5;
+    [SerializeField] int rotationSpeed = 12;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         carFrontCheck = GetComponentInChildren<CarFrontCheck>();
+        nodeMap = GameObject.FindGameObjectWithTag("NodeMap").GetComponent<NodeMap>().nodes;
     }
 
     void Update() {
         moving = !carFrontCheck.colliding;
+        
+        //ToDo: Exclude non-y rotations
+        if(moving) {
+            float step = rotationSpeed * speed * Time.deltaTime;
+            Quaternion target = Quaternion.LookRotation(nodeMap[currentNode].position - this.transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, step);
+        }
+
+        if(Vector3.Distance(transform.position, nodeMap[currentNode].position) < 1) {
+            if(currentNode == nodeMap.Length - 1) {
+                currentNode = 0;
+            } else {
+                currentNode++;
+            }
+        }
     }
 
     void FixedUpdate()
     {
-        Vector3 movement = gameObject.transform.rotation * Vector3.forward;
+        Vector3 movement = gameObject.transform.forward;
         if(moving){
             rigidbody.velocity = movement * speed;
         } else {
@@ -32,7 +51,6 @@ public class Car : MonoBehaviour
                 rigidbody.velocity = Vector3.zero;
             }
         }
-        //Move car forward
         //Turn when needed
         //Stop for player and owner?       
     }
