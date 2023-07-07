@@ -26,7 +26,11 @@ public class Car : MonoBehaviour
         if(moving){
             rigidbody.velocity = movement * speed;
         } else {
-            rigidbody.velocity = Vector3.zero;
+            if(rigidbody.velocity.magnitude > .1) {
+                rigidbody.velocity *= .95f;
+            } else {
+                rigidbody.velocity = Vector3.zero;
+            }
         }
         //Move car forward
         //Turn when needed
