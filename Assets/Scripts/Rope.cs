@@ -78,5 +78,8 @@ public class Rope : MonoBehaviour
         for (int i = 0; i < vertices.Count; i++) {
             lineRenderer.SetPosition(i, vertices[i].position);
         }
+
+        vertices[0].position = anchor_1.position;
+        vertices[vertices.Count - 1].position = anchor_2.position;
     }
 }
