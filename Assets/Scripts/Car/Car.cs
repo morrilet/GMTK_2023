@@ -13,6 +13,8 @@ public class Car : MonoBehaviour
     [SerializeField] int speed = 5;
     [SerializeField] int rotationSpeed = 12;
 
+    public DecreaseCount decreaseCount;
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -32,7 +34,8 @@ public class Car : MonoBehaviour
 
         if(Vector3.Distance(transform.position, nodeMap[currentNode].position) < 1) {
             if(currentNode == nodeMap.Length - 1) {
-                currentNode = 0;
+                decreaseCount();
+                Destroy(this.gameObject);
             } else {
                 currentNode++;
             }
@@ -54,4 +57,6 @@ public class Car : MonoBehaviour
         //Turn when needed
         //Stop for player and owner?       
     }
+
+    public delegate void DecreaseCount();
 }
