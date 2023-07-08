@@ -12,11 +12,12 @@ public class Camera : MonoBehaviour
     [SerializeField] int min = 60;
     [SerializeField] int max = 90;
     public bool frenzied = false;
-    CinemachineVirtualCamera cam;
+    CinemachineFreeLook cam;
     // Start is called before the first frame update
     void Start()
     {
-        cam = GetComponent<CinemachineVirtualCamera>();
+        cam = GetComponent<CinemachineFreeLook>();
+        cam.m_Lens.FieldOfView = min;
     }
 
     // Update is called once per frame

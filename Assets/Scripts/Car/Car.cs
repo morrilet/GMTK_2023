@@ -6,7 +6,7 @@ public class Car : MonoBehaviour
 {
     Rigidbody rigidbody;
     CarFrontCheck carFrontCheck;
-    Transform[] nodeMap;
+    [HideInInspector] public Transform[] nodeMap;
     [SerializeField] int currentNode = 0;
     bool moving = true;
 
@@ -19,7 +19,6 @@ public class Car : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         carFrontCheck = GetComponentInChildren<CarFrontCheck>();
-        nodeMap = GameObject.FindGameObjectWithTag("NodeMap").GetComponent<NodeMap>().nodes;
     }
 
     void Update() {

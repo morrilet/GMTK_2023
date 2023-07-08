@@ -7,6 +7,7 @@ public class CarSpawner : MonoBehaviour
     [SerializeField] GameObject carPrefab;
     [SerializeField] int maxCars = 5;
     [SerializeField] int[] randomTimerBounds;
+    [SerializeField] NodeMap nodeMap;
     int currentCars = 0;
     float spawnTimer = 0;
     int spawnTimerMax;
@@ -14,7 +15,6 @@ public class CarSpawner : MonoBehaviour
     void Start()
     {
         InstantiateCar();
-
     }
     void Update()
     {
@@ -29,6 +29,7 @@ public class CarSpawner : MonoBehaviour
     public void InstantiateCar() {
         GameObject car = Instantiate(carPrefab, transform.position, transform.rotation);
         car.GetComponent<Car>().decreaseCount = DecreaseCount;
+        car.GetComponent<Car>().nodeMap = nodeMap.nodes;
         currentCars++;
         spawnTimer = 0;
         spawnTimerMax = Random.Range(randomTimerBounds[0], randomTimerBounds[1]);

@@ -903,7 +903,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033058873}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -284, y: 0, z: -502}
+  m_LocalPosition: {x: -825, y: 0, z: -502}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -942,6 +942,7 @@ MonoBehaviour:
   carPrefab: {fileID: 7344730078044349526, guid: 75918bbb3e27b6345ad9319d05fc23f6, type: 3}
   maxCars: 5
   randomTimerBounds: 0300000005000000
+  nodeMap: {fileID: 0}
 --- !u!4 &2089416024
 Transform:
   m_ObjectHideFlags: 0
