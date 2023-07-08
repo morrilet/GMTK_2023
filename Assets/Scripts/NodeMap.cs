@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class NodeMap : MonoBehaviour
 {
-    public Transform[] nodes;
+    [HideInInspector] public Transform[] nodes;
+
+    private void Awake() {
+        nodes = GetComponentsInChildren<Transform>();
+    }
 }
