@@ -5,6 +5,10 @@ using Cinemachine;
 
 public class Camera : MonoBehaviour
 {
+    [SerializeField] AnimationCurve breatheCurve;
+    [SerializeField] int breathScale = 10;
+    float breatheCounter = 0;
+    [SerializeField] int zoomSpeed = 60;
     [SerializeField] int min = 60;
     [SerializeField] int max = 90;
     public bool frenzied = false;
@@ -18,10 +22,14 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(frenzied && cam.m_Lens.FieldOfView < max){
-            cam.m_Lens.FieldOfView += 1;
+        breatheCounter += Time.deltaTime;
+
+        if(frenzied && cam.m_Lens.FieldOfView < max + (breatheCurve.Evaluate(breatheCounter) * breathScale)){
+            cam.m_Lens.FieldOfView += zoomSpeed * Time.deltaTime;
+        } else if (frenzied && cam.m_Lens.FieldOfView > max + (breatheCurve.Evaluate(breatheCounter) * breathScale)) {
+            cam.m_Lens.FieldOfView -= zoomSpeed * Time.deltaTime;
         } else if (!frenzied && cam.m_Lens.FieldOfView > min) {
-            cam.m_Lens.FieldOfView -= 1;
+            cam.m_Lens.FieldOfView -= zoomSpeed * Time.deltaTime;
         }
     }
 }
