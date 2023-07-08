@@ -7,19 +7,31 @@ public class Rope : MonoBehaviour
     public Transform anchor_1;
     public Transform anchor_2;
 
+    public bool useForceDistance = false;
+    public float forceDistance = 0.0f;
+
     public float resolution = 0.5f;
     public float width = 0.1f;
-    public float damper = 0.25f;
+    public float spring = 1000f;
+    public float damper = 200f;
 
     protected LineRenderer lineRenderer;
     protected List<Transform> vertices;
+
+    private Rigidbody firstSegmentRigidbody;
+    private Rigidbody lastSegmentRigidbody;
 
     private void Awake() {
         lineRenderer = GetComponent<LineRenderer>();
     }
 
     protected void InitializeRope() {
-        int numVertices = (int)Mathf.Ceil(Vector3.Distance(anchor_1.position, anchor_2.position) / resolution);
+        float distance = Vector3.Distance(anchor_1.position, anchor_2.position);
+        if (useForceDistance) {
+            distance = forceDistance;
+        }
+
+        int numVertices = (int)Mathf.Ceil(distance / resolution);
         vertices = new List<Transform>();
 
         // Set up the vertex objects.
@@ -50,28 +62,35 @@ public class Rope : MonoBehaviour
             GameObject newVertex = vertices[i].gameObject;
             CapsuleCollider newCollider = newVertex.AddComponent<CapsuleCollider>();
             Rigidbody newRigidbody = newVertex.AddComponent<Rigidbody>();
-            ConfigurableJoint newJoint = newVertex.AddComponent<ConfigurableJoint>();
 
-            newJoint.anchor = new Vector3(0f, 0f, resolution * -0.5f);
+            // ConfigurableJoint newJoint = newVertex.AddComponent<ConfigurableJoint>();
+            // newJoint.anchor = new Vector3(0f, 0f, resolution * -0.5f);
+            // newJoint.enablePreprocessing = false;
+            // newJoint.xMotion = ConfigurableJointMotion.Locked;
+            // newJoint.yMotion = ConfigurableJointMotion.Locked;
+            // newJoint.zMotion = ConfigurableJointMotion.Locked;
+            // newJoint.angularXMotion = ConfigurableJointMotion.Limited;
+            // newJoint.angularYMotion = ConfigurableJointMotion.Limited;
+            // newJoint.angularZMotion = ConfigurableJointMotion.Locked;
+            // newJoint.projectionMode = JointProjectionMode.PositionAndRotation;
+            // newJoint.projectionAngle = 180f;
+            // newJoint.projectionDistance = 0.1f;
+
+            SpringJoint newJoint = newVertex.AddComponent<SpringJoint>();
             newJoint.enablePreprocessing = false;
-            newJoint.xMotion = ConfigurableJointMotion.Locked;
-            newJoint.yMotion = ConfigurableJointMotion.Locked;
-            newJoint.zMotion = ConfigurableJointMotion.Locked;
-            newJoint.angularXMotion = ConfigurableJointMotion.Limited;
-            newJoint.angularYMotion = ConfigurableJointMotion.Limited;
-            newJoint.angularZMotion = ConfigurableJointMotion.Locked;
-            newJoint.projectionMode = JointProjectionMode.PositionAndRotation;
-            newJoint.projectionAngle = 180f;
-            newJoint.projectionDistance = 0.1f;
+            newJoint.spring = spring;
+            newJoint.damper = damper;
 
             if (i == 0) {
                 newRigidbody.isKinematic = true;
                 GameObject.Destroy(newCollider);
+                firstSegmentRigidbody = newRigidbody;
             } 
             else if (i == numVertices - 1) {
                 newRigidbody.isKinematic = true;
                 newJoint.connectedBody = vertices[i - 1].GetComponent<Rigidbody>();
                 GameObject.Destroy(newCollider);
+                lastSegmentRigidbody = newRigidbody;
             } else {
                 newJoint.connectedBody = vertices[i - 1].GetComponent<Rigidbody>();
             }
@@ -100,7 +119,12 @@ public class Rope : MonoBehaviour
             lineRenderer.SetPosition(i, vertices[i].position);
         }
 
-        vertices[0].position = anchor_1.position;
-        vertices[vertices.Count - 1].position = anchor_2.position;
+        firstSegmentRigidbody.position = anchor_1.position;
+        lastSegmentRigidbody.position = anchor_2.position;
     }
+
+    // private void LateUpdate() {
+    //     vertices[0].position = anchor_1.position;
+    //     vertices[vertices.Count - 1].position = anchor_2.position;
+    // }
 }

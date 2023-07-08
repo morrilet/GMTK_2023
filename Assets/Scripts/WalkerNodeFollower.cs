@@ -9,29 +9,28 @@ public class WalkerNodeFollower : NodeFollower
     public float maxSpeed;
     public AnimationCurve slowCurve;
     
-    private Rigidbody localRigidbody;
+    // private Rigidbody localRigidbody;
 
     protected void Awake() {
-        localRigidbody = GetComponent<Rigidbody>();
+        // localRigidbody = GetComponent<Rigidbody>();
     }
 
     // If the dog is behind us and we're moving, we should slow down.
     protected float GetMovementModifier() {
         float distance = Vector3.Distance(transform.position, characterController.GetDogTransform().position);
+        float dot = Vector3.Dot((characterController.GetDogTransform().position - transform.position).normalized, agent.velocity.normalized);
+        float percent = Mathf.Clamp01(distance - characterController.maxDistance);
 
-        // Debug.Log(dot);
-        
-        Debug.DrawLine(localRigidbody.position, localRigidbody.position + localRigidbody.velocity, Color.red);
-        Debug.DrawRay(localRigidbody.position, characterController.GetDogTransform().position - localRigidbody.position, Color.green);
-
-        float percent = Mathf.Clamp01((distance - characterController.maxDistance) / (characterController.maxPullDistance - characterController.maxDistance));
-
-        return 1.0f;  // Temp
+        if (dot < 0.0f)
+            return slowCurve.Evaluate(percent);
+        else return 1.0f;
     }
 
     protected override void Update() {
         base.Update();
 
+        // This does allow the walker to move a little too far away because of 
+        // carry-over velocity, but fixing it is too much hassle right now.
         agent.speed = maxSpeed * GetMovementModifier();
     }
 }

@@ -51,7 +51,15 @@ public class DogController : MonoBehaviour
         float dot = Vector3.Dot(inputNormalized, (characterController.GetWalkerTransform().position - localRigidbody.position).normalized);
 
         if (dot < 0.0f)
-            velocity *= characterController.GetDistanceSpeedModifier(localRigidbody.position);
+            velocity *= characterController.GetMaxDistanceSpeedModifier(localRigidbody.position);
+    }
+
+    private void ApplyMinDistanceModifier() {
+        Vector3 inputNormalized = new Vector3(input.normalized.x, 0f, input.normalized.y);
+        float dot = -1.0f * Vector3.Dot(inputNormalized, (characterController.GetWalkerTransform().position - localRigidbody.position).normalized);
+
+        if (dot < 0.0f)
+            velocity *= characterController.GetMinDistanceSpeedModifier(localRigidbody.position);
     }
 
     private void Accelerate() {
@@ -70,6 +78,7 @@ public class DogController : MonoBehaviour
         UpdateInputs();
         UpdateVelocity();
         ApplyLeashModifier();
+        ApplyMinDistanceModifier();
 
         localRigidbody.position += velocity * Time.deltaTime;
     }
