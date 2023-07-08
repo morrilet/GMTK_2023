@@ -9,11 +9,15 @@ public class ActiveRagdoll : MonoBehaviour
     [SerializeField] protected GameObject ragdollCharacter;
     [SerializeField] protected ConfigurableJoint balanceJoint;
     [SerializeField] protected float springStrength = 1000f;
+    [SerializeField] protected float springStrengthLow = 500f;
     [SerializeField] protected float balanceStrength = 100f;
+    [SerializeField] protected float balanceStrengthLow = 50f;
 
     protected Transform[] animatedTransforms;
     protected ConfigurableJoint[] ragdollJoints;
     protected Quaternion[] ragdollJointStartRotations;
+
+    private bool syncBody = true;
 
     public enum BalanceState {
         Balanced,
@@ -31,48 +35,86 @@ public class ActiveRagdoll : MonoBehaviour
         }
     }
 
-    protected void UpdateSpringStrength() {
+    protected void UpdateSpringStrength(float strength) {
         for (int i = 0; i < ragdollJoints.Length; i++) {
             JointDrive xDrive = ragdollJoints[i].angularXDrive;
             JointDrive yzDrive = ragdollJoints[i].angularYZDrive;
 
-            xDrive.positionSpring = springStrength;
-            yzDrive.positionSpring = springStrength;
+            xDrive.positionSpring = strength;
+            yzDrive.positionSpring = strength;
 
             ragdollJoints[i].angularXDrive = xDrive;
             ragdollJoints[i].angularYZDrive = yzDrive;
         }
     }
 
-    protected void UpdateBalanceStrength() {
+    protected void UpdateBalanceStrength(float strength) {
         JointDrive xDrive = balanceJoint.angularXDrive;
         JointDrive yzDrive = balanceJoint.angularYZDrive;
 
-        xDrive.positionSpring = balanceStrength;
-        yzDrive.positionSpring = balanceStrength;
+        xDrive.positionSpring = strength;
+        yzDrive.positionSpring = strength;
 
         balanceJoint.angularXDrive = xDrive;
         balanceJoint.angularYZDrive = yzDrive;
     }
 
-    // protected void SetBalanceLockState(bool locked) {
-    //     balanceJoint.angularXMotion = state ? ConfigurableJointMotion.Locked : ConfigurableJointMotion.Free;
-    //     balanceJoint.angularYMotion = state ? ConfigurableJointMotion.Locked : ConfigurableJointMotion.Free;
-    //     balanceJoint.angularZMotion = state ? ConfigurableJointMotion.Locked : ConfigurableJointMotion.Free;
-    // }
+    public void SetBalanceState(BalanceState state) {
+        switch (state) {
+            case BalanceState.Balanced:
+                SetBalanced();
+                break;
+            case BalanceState.Unbalanced:
+                SetUnbalanced();
+                break;
+            case BalanceState.Falling:
+                SetFalling();
+                break;
+            default:
+                Debug.LogWarning("Unknown BalanceState: " + state.ToString());
+                break;
+        }
+    }
+
+    private void SetBalanced() {
+        balanceJoint.xMotion = ConfigurableJointMotion.Locked;
+        balanceJoint.yMotion = ConfigurableJointMotion.Locked;
+        balanceJoint.zMotion = ConfigurableJointMotion.Locked;
+        UpdateSpringStrength(springStrength);
+        UpdateBalanceStrength(balanceStrength);
+        syncBody = true;
+    }
+
+    private void SetUnbalanced() {
+        balanceJoint.xMotion = ConfigurableJointMotion.Locked;
+        balanceJoint.yMotion = ConfigurableJointMotion.Locked;
+        balanceJoint.zMotion = ConfigurableJointMotion.Free;
+        UpdateSpringStrength(springStrengthLow);
+        UpdateBalanceStrength(balanceStrengthLow);
+        syncBody = true;
+    }
+
+    private void SetFalling() {
+        balanceJoint.xMotion = ConfigurableJointMotion.Locked;
+        balanceJoint.yMotion = ConfigurableJointMotion.Locked;
+        balanceJoint.zMotion = ConfigurableJointMotion.Free;
+        UpdateSpringStrength(0.0f);
+        UpdateBalanceStrength(0.0f);
+        syncBody = false;
+    }
 
     protected void Awake() {
         InitializeBodyData();
-        UpdateSpringStrength();
-        UpdateBalanceStrength();
+        SetBalanceState(BalanceState.Falling);
     }
 
     protected void FixedUpdate() {
-        SyncBodyData();
+        if (syncBody)
+            SyncBodyData();
+    }
 
-        // For testing...
-        UpdateSpringStrength();
-        UpdateBalanceStrength();
+    public void TurnTowardsTarget(Vector3 target) {
+        animatedCharacter.transform.LookAt(target);
     }
 
     protected void SyncBodyData() {
@@ -83,16 +125,5 @@ public class ActiveRagdoll : MonoBehaviour
                 }
             }
         }
-    }
-
-    protected void SetBalanceState(BalanceState state) {
-        // switch (state))
-        // {
-        //     case BalanceState.Balanced:
-        //         balanceStrength = 100f;
-        //         break;
-                
-        //     default:
-        // }
     }
 }
