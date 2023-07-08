@@ -56,7 +56,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7915839649480951607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.94, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -114,8 +114,8 @@ MonoBehaviour:
   animatedCharacter: {fileID: 1569659596914714243}
   ragdollCharacter: {fileID: 7915839649480951607}
   balanceJoint: {fileID: 3443904304495118260}
-  springStrength: 150
-  balanceStrength: 200
+  springStrength: 500
+  balanceStrength: 750
 --- !u!54 &2738757652497351012
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -197,7 +197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2106161764300793749, guid: 97d16b3d1c4128847bd9b66b1926e181, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2106161764300793749, guid: 97d16b3d1c4128847bd9b66b1926e181, type: 3}
       propertyPath: m_UpdateWhenOffscreen
@@ -477,11 +477,11 @@ ConfigurableJoint:
   m_ConnectedAnchor: {x: -0.94000006, y: 0.93219286, z: -0.07776207}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
-  m_XMotion: 0
-  m_YMotion: 0
-  m_ZMotion: 0
-  m_AngularXMotion: 0
-  m_AngularYMotion: 0
+  m_XMotion: 2
+  m_YMotion: 2
+  m_ZMotion: 2
+  m_AngularXMotion: 2
+  m_AngularYMotion: 2
   m_AngularZMotion: 2
   m_LinearLimitSpring:
     spring: 0

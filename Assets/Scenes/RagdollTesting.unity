@@ -3464,34 +3464,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
-      propertyPath: springStrength
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
-      propertyPath: balanceStrength
-      value: 750
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443904304495118260, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
-      propertyPath: m_XMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443904304495118260, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
-      propertyPath: m_YMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443904304495118260, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
-      propertyPath: m_ZMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443904304495118260, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
-      propertyPath: m_AngularXMotion
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443904304495118260, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
-      propertyPath: m_AngularYMotion
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7743592532096706727, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
       propertyPath: m_RootOrder
       value: 4

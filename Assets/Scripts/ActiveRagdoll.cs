@@ -15,6 +15,12 @@ public class ActiveRagdoll : MonoBehaviour
     protected ConfigurableJoint[] ragdollJoints;
     protected Quaternion[] ragdollJointStartRotations;
 
+    public enum BalanceState {
+        Balanced,
+        Unbalanced,
+        Falling
+    }
+
     protected void InitializeBodyData() {
         animatedTransforms = animatedCharacter.GetComponentsInChildren<Transform>();
         ragdollJoints = ragdollCharacter.GetComponentsInChildren<ConfigurableJoint>().Where(joint => joint.gameObject != balanceJoint.gameObject).ToArray();
@@ -23,8 +29,6 @@ public class ActiveRagdoll : MonoBehaviour
             ragdollJointStartRotations[i] = ragdollJoints[i].transform.localRotation;
             ragdollJoints[i].SetupAsCharacterJoint();
         }
-        UpdateSpringStrength();
-        UpdateBalanceStrength();
     }
 
     protected void UpdateSpringStrength() {
@@ -51,6 +55,26 @@ public class ActiveRagdoll : MonoBehaviour
         balanceJoint.angularYZDrive = yzDrive;
     }
 
+    // protected void SetBalanceLockState(bool locked) {
+    //     balanceJoint.angularXMotion = state ? ConfigurableJointMotion.Locked : ConfigurableJointMotion.Free;
+    //     balanceJoint.angularYMotion = state ? ConfigurableJointMotion.Locked : ConfigurableJointMotion.Free;
+    //     balanceJoint.angularZMotion = state ? ConfigurableJointMotion.Locked : ConfigurableJointMotion.Free;
+    // }
+
+    protected void Awake() {
+        InitializeBodyData();
+        UpdateSpringStrength();
+        UpdateBalanceStrength();
+    }
+
+    protected void FixedUpdate() {
+        SyncBodyData();
+
+        // For testing...
+        UpdateSpringStrength();
+        UpdateBalanceStrength();
+    }
+
     protected void SyncBodyData() {
         for (int i = 0; i < animatedTransforms.Length; i++) {
             for (int j = 0; j < ragdollJoints.Length; j++) {
@@ -61,33 +85,14 @@ public class ActiveRagdoll : MonoBehaviour
         }
     }
 
-    // protected void ApplyBalanceForces(BalanceMode mode) {
-    //     if (mode == BalanceMode.STABLE) {
-    //         BalanceStable();
-    //     }
-    // }
-
-    // protected void BalanceStable() {
-    //     Quaternion targetRotation = Quaternion.FromToRotation(-ragdollBalanceRoot.transform.forward, Vector3.up);
-    //     Debug.DrawRay(ragdollBalanceRoot.transform.position, targetRotation.eulerAngles, Color.red, 0.01f);
-    //     ragdollBalanceRoot.AddTorque(targetRotation.eulerAngles * balanceStrength);
-
-    //     // Point the balance root towards the target direction.
-    //     // TODO: Replace Vector3.forward with the direction of the character's movement.
-
-    //     // float angle = Vector3.SignedAngle(ragdollBalanceRoot.transform.forward, Vector3.forward, Vector3.up) / 180f;
-    //     // float percent = stableBalanceCurve.Evaluate(angle);
-    //     // ragdollBalanceRoot.AddRelativeTorque(0, percent * balanceStrength, 0);
-    // }
-
-    protected void Awake() {
-        InitializeBodyData();
-    }
-
-    protected void FixedUpdate() {
-        SyncBodyData();
-        UpdateSpringStrength();
-        UpdateBalanceStrength();
-        // ApplyBalanceForces(balanceMode);
+    protected void SetBalanceState(BalanceState state) {
+        // switch (state))
+        // {
+        //     case BalanceState.Balanced:
+        //         balanceStrength = 100f;
+        //         break;
+                
+        //     default:
+        // }
     }
 }

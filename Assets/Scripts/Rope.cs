@@ -29,14 +29,19 @@ public class Rope : MonoBehaviour
             // Parent later rope segments to the previous one, but the first to the main object.
             if (i == 0) {
                 newVertex.transform.parent = transform;
+            } 
+            else if (i == numVertices - 1) {
+                newVertex.transform.parent = transform;
+                newVertex.transform.parent = vertices[i - 1].transform;
             }
             else {
                 newVertex.transform.parent = vertices[i - 1].transform;
             }
 
             newVertex.transform.position = Vector3.Lerp(anchor_1.position, anchor_2.position, (float)i / ((float)numVertices - 1));
-            // newVertex.transform.rotation = Quaternion.LookRotation(anchor_2.position - anchor_1.position);
+            newVertex.transform.rotation = Quaternion.LookRotation(anchor_2.position - anchor_1.position);
             newVertex.transform.localScale = Vector3.one;
+            newVertex.layer = LayerMask.NameToLayer("Rope");
             vertices.Add(newVertex.transform);
         }
 
@@ -45,10 +50,28 @@ public class Rope : MonoBehaviour
             GameObject newVertex = vertices[i].gameObject;
             CapsuleCollider newCollider = newVertex.AddComponent<CapsuleCollider>();
             Rigidbody newRigidbody = newVertex.AddComponent<Rigidbody>();
-            HingeJoint newJoint = newVertex.AddComponent<HingeJoint>();
+            ConfigurableJoint newJoint = newVertex.AddComponent<ConfigurableJoint>();
+
+            newJoint.anchor = new Vector3(0f, 0f, resolution * -0.5f);
+            newJoint.enablePreprocessing = false;
+            newJoint.xMotion = ConfigurableJointMotion.Locked;
+            newJoint.yMotion = ConfigurableJointMotion.Locked;
+            newJoint.zMotion = ConfigurableJointMotion.Locked;
+            newJoint.angularXMotion = ConfigurableJointMotion.Limited;
+            newJoint.angularYMotion = ConfigurableJointMotion.Limited;
+            newJoint.angularZMotion = ConfigurableJointMotion.Locked;
+            newJoint.projectionMode = JointProjectionMode.PositionAndRotation;
+            newJoint.projectionAngle = 180f;
+            newJoint.projectionDistance = 0.1f;
 
             if (i == 0) {
                 newRigidbody.isKinematic = true;
+                GameObject.Destroy(newCollider);
+            } 
+            else if (i == numVertices - 1) {
+                newRigidbody.isKinematic = true;
+                newJoint.connectedBody = vertices[i - 1].GetComponent<Rigidbody>();
+                GameObject.Destroy(newCollider);
             } else {
                 newJoint.connectedBody = vertices[i - 1].GetComponent<Rigidbody>();
             }
@@ -57,12 +80,10 @@ public class Rope : MonoBehaviour
             newCollider.height = resolution;
             newCollider.direction = 2;  // Y-axis
 
-            newJoint.anchor = new Vector3(0f, 0f, resolution * -0.5f);
-
-            JointSpring newSpring = newJoint.spring;
-            newSpring.damper = damper;
-            newJoint.spring = newSpring;
-            newJoint.useSpring = true;
+            // JointSpring newSpring = newJoint.spring;
+            // newSpring.damper = damper;
+            // newJoint.spring = newSpring;
+            // newJoint.useSpring = true;
         }
     }
 
