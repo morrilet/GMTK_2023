@@ -12,25 +12,25 @@ public class Camera : MonoBehaviour
     [SerializeField] int min = 60;
     [SerializeField] int max = 90;
     public bool frenzied = false;
-    CinemachineFreeLook cam;
+    CinemachineVirtualCamera cam;
     // Start is called before the first frame update
     void Start()
     {
-        cam = GetComponent<CinemachineFreeLook>();
-        cam.m_Lens.FieldOfView = min;
+        cam = GetComponent<CinemachineVirtualCamera>();
+        cam.m_Lens.OrthographicSize = min;
     }
 
     // Update is called once per frame
     void Update()
     {
-        breatheCounter += Time.deltaTime;
+        breatheCounter += Time.deltaTime / 2;
 
-        if(frenzied && cam.m_Lens.FieldOfView < max + (breatheCurve.Evaluate(breatheCounter) * breathScale)){
-            cam.m_Lens.FieldOfView += zoomSpeed * Time.deltaTime;
-        } else if (frenzied && cam.m_Lens.FieldOfView > max + (breatheCurve.Evaluate(breatheCounter) * breathScale)) {
-            cam.m_Lens.FieldOfView -= zoomSpeed * Time.deltaTime;
-        } else if (!frenzied && cam.m_Lens.FieldOfView > min) {
-            cam.m_Lens.FieldOfView -= zoomSpeed * Time.deltaTime;
+        if(frenzied && cam.m_Lens.OrthographicSize < max + (breatheCurve.Evaluate(breatheCounter) * breathScale)){
+            cam.m_Lens.OrthographicSize += zoomSpeed * Time.deltaTime;
+        } else if (frenzied && cam.m_Lens.OrthographicSize > max + (breatheCurve.Evaluate(breatheCounter) * breathScale)) {
+            cam.m_Lens.OrthographicSize -= zoomSpeed * Time.deltaTime;
+        } else if (!frenzied && cam.m_Lens.OrthographicSize > min) {
+            cam.m_Lens.OrthographicSize -= zoomSpeed * Time.deltaTime;
         }
     }
 }
