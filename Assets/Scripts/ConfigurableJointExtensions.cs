@@ -68,12 +68,35 @@ public static class ConfigurableJointExtensions
 		joint.angularZMotion = ConfigurableJointMotion.Limited;
 		joint.breakForce = Mathf.Infinity;
 		joint.breakTorque = Mathf.Infinity;
+
+		var angularXDrive = joint.angularXDrive;
+		angularXDrive.positionSpring = 0.0f;
+		angularXDrive.positionDamper = 0.0f;
+		joint.angularXDrive = angularXDrive;
+
+		var angularYZDrive = joint.angularYZDrive;
+		angularYZDrive.positionSpring = 0.0f;
+		angularYZDrive.positionDamper = 0.0f;
+		joint.angularYZDrive = angularYZDrive;
 		
-		// Removed for testing...
 		joint.rotationDriveMode = RotationDriveMode.Slerp;
 		var slerpDrive = joint.slerpDrive;
 		slerpDrive.mode = JointDriveMode.Position;
 		slerpDrive.maximumForce = Mathf.Infinity;
+		joint.slerpDrive = slerpDrive;
+	}
+
+	/// <summary>
+	/// Enable or disable slerp drive. This is useful when you want to temporarily disable the character joint and make it a pure ragdoll.
+	/// </summary>
+	public static void SetSlerpDriveEnabled (this ConfigurableJoint joint, bool enabled) {
+		var slerpDrive = joint.slerpDrive;
+		if (enabled) {
+			slerpDrive.maximumForce = Mathf.Infinity;
+		}
+		else {
+			slerpDrive.maximumForce = 0.0f;
+		}
 		joint.slerpDrive = slerpDrive;
 	}
 }
