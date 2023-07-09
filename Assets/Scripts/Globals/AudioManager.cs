@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour
     }
 
     private void Start() {
-        // PlayMusic(GlobalVariables.MUSIC_MAIN_MENU);
+        PlayMusic(GlobalVariables.MUSIC_MAIN_MENU);
     }
 
     public static void PlayOneShot(string eventName, GameObject obj) {
