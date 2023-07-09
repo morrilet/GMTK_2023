@@ -15,12 +15,10 @@ public class Camera : MonoBehaviour
     CinemachineVirtualCamera cam;
     // Start is called before the first frame update
 
-    void Awake() {
-        GameManager.instance.AssignCamera(this);
-    }
-
     void Start()
     {
+        GameManager.instance.AssignCamera(this);
+
         cam = GetComponent<CinemachineVirtualCamera>();
         cam.m_Lens.OrthographicSize = min;
     }

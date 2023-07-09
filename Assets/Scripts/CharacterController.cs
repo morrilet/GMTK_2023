@@ -42,7 +42,7 @@ public class CharacterController : MonoBehaviour
 
     [HideInInspector] public bool isFrenzied = false;
 
-    private void Awake() {
+    private void Start() {
         GameManager.instance.AssignCharacterController(this);
         stamina = maxStamina;
     }
