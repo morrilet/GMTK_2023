@@ -69,6 +69,7 @@ public static class ConfigurableJointExtensions
 		joint.breakForce = Mathf.Infinity;
 		joint.breakTorque = Mathf.Infinity;
 		
+		// Removed for testing...
 		joint.rotationDriveMode = RotationDriveMode.Slerp;
 		var slerpDrive = joint.slerpDrive;
 		slerpDrive.mode = JointDriveMode.Position;

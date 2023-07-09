@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!137 &35670403 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1736594853752900926, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+  m_PrefabInstance: {fileID: 367430491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &47274933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1210,10 +1215,78 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1736594853752900926, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824292385074387888, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966974500966701460, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: springDamper
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966974500966701460, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: turnStrength
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966974500966701460, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: balanceDamper
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966974500966701460, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: springStrength
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966974500966701460, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: springDamperLow
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966974500966701460, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: balanceDamperLow
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966974500966701460, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: springStrengthLow
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966974500966701460, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: balanceStrengthLow
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500873782115944781, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695927847395487568, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: anim_mesh
+      value: 
+      objectReference: {fileID: 2108154072}
+    - target: {fileID: 3695927847395487568, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: ragdoll_mesh
+      value: 
+      objectReference: {fileID: 35670403}
+    - target: {fileID: 3695927847395487568, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: walkerAnimator
+      value: 
+      objectReference: {fileID: 846150434}
     - target: {fileID: 5095480813051271728, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
       propertyPath: nodeMap
       value: 
       objectReference: {fileID: 1242603928}
+    - target: {fileID: 8245497790975058120, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: m_AngularXMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245497790975058120, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: m_AngularYMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245497790975058120, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+      propertyPath: m_AngularZMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8507437060273733056, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3111,6 +3184,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8fee20182a09b54a9c451f3ef1a8e32, type: 3}
+--- !u!95 &846150434 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3310312974072492462, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+  m_PrefabInstance: {fileID: 367430491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &851803799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7537,6 +7615,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8fee20182a09b54a9c451f3ef1a8e32, type: 3}
+--- !u!137 &2108154072 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2824292385074387888, guid: d0f52d8ce51e19642bb4ea3cf5d1597e, type: 3}
+  m_PrefabInstance: {fileID: 367430491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2111155931
 PrefabInstance:
   m_ObjectHideFlags: 0
