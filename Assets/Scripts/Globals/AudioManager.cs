@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     
+    [HideInInspector] public Dictionary<string, FMOD.Studio.EventInstance> soundInstances;
     [HideInInspector] public Dictionary<string, FMOD.Studio.EventInstance> musicInstances;
 
     private void Awake() {
