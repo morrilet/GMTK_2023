@@ -26,6 +26,7 @@ public class Stick : MonoBehaviour, IInteractable
         canDrop = false;
         attachPoint = carrier.attachAnchor;
         tripTrigger.SetActive(false);
+        AudioManager.PlayOneShot(GlobalVariables.SFX_PICKUP_STICK);
     }
 
     private void Update() {
