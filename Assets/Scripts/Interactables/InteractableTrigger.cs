@@ -4,15 +4,37 @@ using UnityEngine;
 
 public class InteractableTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    GameObject nearbyInteractable = null;
+    bool buttonPrev = false;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(nearbyInteractable != null) {
+            if(Input.GetAxis("Interact") == 1 && !buttonPrev){
+                nearbyInteractable.GetComponent<IInteractable>().Interact();
+                buttonPrev = true;
+            }
+        }
+        if(Input.GetAxis("Interact") != 1){
+            buttonPrev = false;
+        }
+    }
+
+    void OnTriggerEnter(Collider col) {
+        if(col.gameObject.tag == "Interactable" && nearbyInteractable == null) {
+             nearbyInteractable = col.gameObject;
+        }
+    }
+
+    void OnTriggerStay(Collider col) {
+        if(col.gameObject.tag == "Interactable" && nearbyInteractable == null) {
+            nearbyInteractable = col.gameObject;
+        }
+    }
+
+    void OnTriggerExit(Collider col) {
+        if(col.gameObject.tag == "Interactable" && nearbyInteractable == col.gameObject) {
+            nearbyInteractable = null;
+        }
     }
 }
