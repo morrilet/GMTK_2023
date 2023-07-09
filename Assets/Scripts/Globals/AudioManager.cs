@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     
+    [HideInInspector] public Dictionary<string, FMOD.Studio.EventInstance> soundInstances;
     [HideInInspector] public Dictionary<string, FMOD.Studio.EventInstance> musicInstances;
 
     private void Awake() {
@@ -21,6 +22,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start() {
         PlayMusic(GlobalVariables.MUSIC_MAIN_MENU);
+        PlayOneShot(GlobalVariables.SOUNDSCAPE_PARK_AMBIENCE);
     }
 
     public static void PlayOneShot(string eventName, GameObject obj) {
@@ -57,6 +59,10 @@ public class AudioManager : MonoBehaviour
         AudioManager.instance.musicInstances[eventName].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         AudioManager.instance.musicInstances[eventName].release();
         AudioManager.instance.musicInstances.Remove(eventName);
+    }
+
+    public static void ToggleSnapshot(string eventName) {
+        
     }
 
     public static bool IsPlaying(string eventName) {

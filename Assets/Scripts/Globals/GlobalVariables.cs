@@ -8,11 +8,14 @@ public class GlobalVariables : MonoBehaviour
 
     public static string MUSIC_MAIN_MENU = "event:/Music/main_theme";
 
+    public static string SNAPSHOT_GAMEPLAY = "snapshot:/gameplay";
     public static string SNAPSHOT_FRENZY = "snapshot:/frenzy";
 
     public static string SOUNDSCAPE_PARK_AMBIENCE = "event:/soundscape/ambience";
 
     public static string SFX_DOG_BARK = "event:/sound effects/dog_bark";
+    public static string SFX_SNACK_COLLECT = "event:/sound effects/snack_collect";
+    public static string SFX_PICKUP_STICK = "event:/sound effects/sticks_interaction";
     public static string SFX_DOG_SNIFF = "event:/sound effects/sniff";
     public static string SFX_DOG_WALK_CYCLE = "event:/sound effects/walk_cycle_dog";
     public static string SFX_FIRE_HYDRANT = "event:/sound effects/fire_hydrant";
