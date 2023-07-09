@@ -177,7 +177,6 @@ MonoBehaviour:
   walkerNodeFollower: {fileID: 5095480813051271728}
   dog: {fileID: 48140427641682396}
   walkerAnimator: {fileID: 3310312974072492462}
-  dogAnimator: {fileID: 0}
   minDistance: 0.8
   maxDistance: 6
   maxPullDistance: 10
@@ -212,6 +211,7 @@ MonoBehaviour:
   anim_mesh: {fileID: 2824292385074387888}
   ragdoll_mesh: {fileID: 1736594853752900926}
   toggle: 0
+  isFrenzied: 0
 --- !u!1001 &11228457692520652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -378,15 +378,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
       propertyPath: balanceDamperLow
-      value: 25
+      value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
+      propertyPath: springDamperNone
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
+      propertyPath: balanceDamperNone
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
+      propertyPath: leashContactJoint
+      value: 
+      objectReference: {fileID: 3326903249034897700}
     - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
       propertyPath: springStrengthLow
       value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
       propertyPath: balanceStrengthLow
-      value: 600
+      value: 650
+      objectReference: {fileID: 0}
+    - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
+      propertyPath: springStrengthNone
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2957505614338619736, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
+      propertyPath: balanceStrengthNone
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3019463798967435488, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
       propertyPath: m_Layer
@@ -900,6 +920,11 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 3303245352116048226, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
   m_PrefabInstance: {fileID: 11228457692520652}
   m_PrefabAsset: {fileID: 0}
+--- !u!153 &3326903249034897700 stripped
+ConfigurableJoint:
+  m_CorrespondingSourceObject: {fileID: 3318146708234439144, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
+  m_PrefabInstance: {fileID: 11228457692520652}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5275375618432269962 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5265273206944177734, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
@@ -1349,6 +1374,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   decelerationTime: 0.15
   groundOffset: 0.2
+  isFrenzied: 0
 --- !u!208 &3616343541933159057
 NavMeshObstacle:
   m_ObjectHideFlags: 0
