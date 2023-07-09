@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
 {
@@ -68,6 +69,10 @@ public class CharacterController : MonoBehaviour
             currentState = ActiveRagdoll.BalanceState.Balanced;
             faceDog = false;
             walker.SetBalanceState(currentState);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SceneManager.LoadScene(0);
         }
 
         // TEMP TESTING

@@ -29,6 +29,7 @@ public class SnackPickup : MonoBehaviour
 
     private void Pickup() {
         AudioManager.PlayOneShot(GlobalVariables.SFX_SNACK_COLLECT);
+        GameManager.instance.CollectSnack();
         Destroy(gameObject);
     }
 
