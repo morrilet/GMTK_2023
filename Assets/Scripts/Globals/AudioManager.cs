@@ -6,7 +6,6 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     
-    [HideInInspector] public Dictionary<string, FMOD.Studio.EventInstance> soundInstances;
     [HideInInspector] public Dictionary<string, FMOD.Studio.EventInstance> musicInstances;
 
     private void Awake() {
@@ -59,6 +58,14 @@ public class AudioManager : MonoBehaviour
         AudioManager.instance.musicInstances[eventName].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         AudioManager.instance.musicInstances[eventName].release();
         AudioManager.instance.musicInstances.Remove(eventName);
+    }
+
+    public static void SetFloat(string eventName, string paramName, float value) {
+        if (!AudioManager.instance.musicInstances.ContainsKey(eventName)) 
+            return;
+
+        FMOD.Studio.EventInstance instance = AudioManager.instance.musicInstances[eventName];
+        instance.setParameterByName(paramName, value);
     }
 
     public static void ToggleSnapshot(string eventName) {
