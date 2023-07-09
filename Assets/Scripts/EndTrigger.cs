@@ -11,10 +11,12 @@ public class EndTrigger : MonoBehaviour
 
     // Start is called before the first frame update
     void OnTriggerEnter(Collider col) {
-        if (playerLayer == (playerLayer | (1 << col.gameObject.layer))) {
-            if (GameManager.instance.characterController.walkerNodeFollower.LastNode())
-            canvasObj.SetActive(true);
-            scoreText.text = $"You managed to gobble {GameManager.instance.score} pieces of toast! Wow!";
+        if (col.gameObject.layer == 7) {
+            Debug.Log("Collided");
+            if (GameManager.instance.characterController.walkerNodeFollower.LastNode()) {
+                canvasObj.SetActive(true);
+                scoreText.text = $"You managed to gobble {GameManager.instance.score} pieces of toast! Wow!";
+            }
         }
     }
 }
