@@ -11,6 +11,7 @@ public class Stick : MonoBehaviour, IInteractable
     GameObject attachPoint;
     Rigidbody localRigidbody;
     Collider localCollider;
+    bool canDrop;
 
     private void Awake() {
         localRigidbody = GetComponent<Rigidbody>();
@@ -22,12 +23,13 @@ public class Stick : MonoBehaviour, IInteractable
         localCollider.enabled = false;
         obj.canInteract = false;
         carrier = obj;
+        canDrop = false;
         attachPoint = carrier.attachAnchor;
         tripTrigger.SetActive(false);
     }
 
     private void Update() {
-        if (carrier != null) {
+        if (carrier != null && canDrop) {
             if (Input.GetButtonDown(GlobalVariables.INPUT_INTERACT)) {
                 Drop();
             }
@@ -37,6 +39,8 @@ public class Stick : MonoBehaviour, IInteractable
             localRigidbody.position = attachPoint.transform.position;
             localRigidbody.rotation = attachPoint.transform.rotation * Quaternion.Euler(heldRotationOffset);
         }
+
+        canDrop = true;
     }
 
     private void Drop() {

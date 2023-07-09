@@ -8,6 +8,8 @@ public class GlobalVariables : MonoBehaviour
 
     public static string MUSIC_MAIN_MENU = "event:/Music/main_theme";
 
+    public static string SNAPSHOT_FRENZY = "snapshot:/frenzy";
+
     public static string SOUNDSCAPE_PARK_AMBIENCE = "event:/soundscape/ambience";
 
     public static string SFX_DOG_BARK = "event:/sound effects/dog_bark";

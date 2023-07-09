@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     
     [HideInInspector] public FMOD.Studio.EventInstance musicInstance;
+    [HideInInspector] public FMOD.Studio.EventInstance soundscapeInstance;
 
     private void Awake() {
         if (!instance) {
@@ -53,6 +54,26 @@ public class AudioManager : MonoBehaviour
         AudioManager.instance.musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         AudioManager.instance.musicInstance.release();
     }
+
+    // public static void PlaySoundScape(string eventName) {
+    //     if (AudioManager.IsPlaying(AudioManager.instance.musicInstance)) {
+    //         Debug.LogWarning("Music is already playing");
+    //         return;
+    //     }
+
+    //     AudioManager.instance.musicInstance = FMODUnity.RuntimeManager.CreateInstance(eventName);
+    //     AudioManager.instance.musicInstance.start();
+    // }
+
+    // public static void StopSoundScape() {
+    //     if (!AudioManager.IsPlaying(AudioManager.instance.musicInstance)) {
+    //         Debug.LogWarning("Music is not playing");
+    //         return;
+    //     }
+
+    //     AudioManager.instance.musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    //     AudioManager.instance.musicInstance.release();
+    // }
 
     public static bool IsPlaying(FMOD.Studio.EventInstance eventInstance) {
 	FMOD.Studio.PLAYBACK_STATE state;   

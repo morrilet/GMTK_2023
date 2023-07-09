@@ -87,6 +87,8 @@ public class CharacterController : MonoBehaviour
         faceDog = false;
         isFrenzied = true;
         walker.SetBalanceState(currentState);
+
+        AudioManager.PlayMusic(GlobalVariables.SNAPSHOT_FRENZY);
     }
 
     private void UpdateWalkerAnimator() {
