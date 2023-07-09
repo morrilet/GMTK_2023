@@ -11,7 +11,6 @@ public class CharacterController : MonoBehaviour
     [Space]
 
     public Animator walkerAnimator;
-    public Animator dogAnimator;
 
     [Space]
 
@@ -41,6 +40,8 @@ public class CharacterController : MonoBehaviour
     public SkinnedMeshRenderer ragdoll_mesh;
     public bool toggle = false;
 
+    [HideInInspector] public bool isFrenzied = false;
+
     private void Awake() {
         stamina = maxStamina;
     }
@@ -49,13 +50,17 @@ public class CharacterController : MonoBehaviour
 
         if (currentState == ActiveRagdoll.BalanceState.Falling) {
             if (getUpTimer <= getUpTime) {
+                walkerNodeFollower.agent.enabled = false;
+                walkerNodeFollower.enabled = false;
                 return;
             }
+            walkerNodeFollower.agent.enabled = true;
+            walkerNodeFollower.enabled = true;
         }
 
         if (DogAtMaxRange()) {
             currentState = ActiveRagdoll.BalanceState.Unbalanced;
-            faceDog = true;
+            faceDog = stamina > 0.0f;
             walker.SetBalanceState(currentState);
         }
         else if (DogAtComfortableRange() || stamina <= 0.0f) {
@@ -65,18 +70,18 @@ public class CharacterController : MonoBehaviour
         }
 
         // TEMPORARY FOR DEBUGGING
-        // if (Input.GetKeyDown(KeyCode.T)) {
-        //     currentState = ActiveRagdoll.BalanceState.Falling;
-        //     faceDog = false;
-        //     walker.SetBalanceState(currentState);
-        // }
+        if (Input.GetKeyDown(KeyCode.T)) {
+            currentState = ActiveRagdoll.BalanceState.Falling;
+            faceDog = false;
+            walker.SetBalanceState(currentState);
+        }
 
         // TEMP TESTING
-        if (Input.GetKeyDown(KeyCode.T)) {
-            anim_mesh.enabled = toggle;
-            ragdoll_mesh.enabled = !toggle;
-            toggle = !toggle;
-        }
+        // if (Input.GetKeyDown(KeyCode.T)) {
+        //     anim_mesh.enabled = toggle;
+        //     ragdoll_mesh.enabled = !toggle;
+        //     toggle = !toggle;
+        // }
     }
 
     private void UpdateWalkerAnimator() {
@@ -96,6 +101,23 @@ public class CharacterController : MonoBehaviour
             getUpTimer += Time.deltaTime;
         } else {
             getUpTimer = 0.0f;
+        }
+    }
+
+    private void UpdateFrenzied() {
+        if (currentState == ActiveRagdoll.BalanceState.Falling) {
+            isFrenzied = true;
+        } else {
+            isFrenzied = false;
+        }
+    }
+
+    private void ForceWalkerToDogRadius() {
+        Vector3 direction = GetDogTransform().position - GetWalkerTransform().position;
+        direction.y = 0.0f;
+
+        if (direction.magnitude > maxPullDistance) {
+            walker.AddForce(direction.normalized * 10f);
         }
     }
 
@@ -136,8 +158,11 @@ public class CharacterController : MonoBehaviour
         UpdateState();
         UpdateStamina();
         UpdateGetUpTimer();
+        UpdateFrenzied();
 
-        // Cosmetic
+        if (isFrenzied)
+            ForceWalkerToDogRadius();
+
         UpdateWalkerAnimator();
 
         Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
