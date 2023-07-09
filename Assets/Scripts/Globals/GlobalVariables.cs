@@ -23,6 +23,7 @@ public class GlobalVariables : MonoBehaviour
     public static string SFX_LEASH_PULL = "event:/sound effects/leash_pull";
     public static string SFX_OWNER_BREATHING = "event:/sound effects/owner_breathing";
     public static string SFX_UI_CLICK = "event:/ui_sfx/ui_click";
+    public static string SFX_UI_HOVER = "event:/ui_sfx/ui_hover";
 
     // INPUTS
 
