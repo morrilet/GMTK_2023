@@ -71,6 +71,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+  parent: {fileID: 383005830438509095}
 --- !u!1001 &689574213102462838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81,7 +82,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: edd835a7e9cf15a47a8fd88bab4e40e9, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: edd835a7e9cf15a47a8fd88bab4e40e9, type: 3}
       propertyPath: m_LocalScale.x
