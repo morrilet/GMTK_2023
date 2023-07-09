@@ -13,7 +13,7 @@ public class AudioDebug : MonoBehaviour
             AudioManager.PlayOneShot(GlobalVariables.SFX_DOG_BARK);
         }
         if(Input.GetKeyDown(KeyCode.K)) {
-            AudioManager.PlayOneShot(GlobalVariables.SFX_DOG_WALK_CYCLE);
+            AudioManager.PlayOneShot(GlobalVariables.SOUNDSCAPE_PARK_AMBIENCE);
         }
         if(Input.GetKeyDown(KeyCode.L)) {
             AudioManager.PlayOneShot(GlobalVariables.SFX_OWNER_NO);
