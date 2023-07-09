@@ -6,8 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     
-    [HideInInspector] public FMOD.Studio.EventInstance musicInstance;
-    [HideInInspector] public FMOD.Studio.EventInstance soundscapeInstance;
+    [HideInInspector] public Dictionary<string, FMOD.Studio.EventInstance> musicInstances;
 
     private void Awake() {
         if (!instance) {
@@ -16,6 +15,8 @@ public class AudioManager : MonoBehaviour
             GameObject.DestroyImmediate(this.gameObject);
         }
         GameObject.DontDestroyOnLoad(this);
+
+        musicInstances = new Dictionary<string, FMOD.Studio.EventInstance>() {};
     }
 
     private void Start() {
@@ -36,48 +37,36 @@ public class AudioManager : MonoBehaviour
     }
 
     public static void PlayMusic(string eventName) {
-        if (AudioManager.IsPlaying(AudioManager.instance.musicInstance)) {
-            Debug.LogWarning("Music is already playing");
+        AudioManager.instance.musicInstances[eventName] = FMODUnity.RuntimeManager.CreateInstance(eventName);
+
+        if (AudioManager.IsPlaying(eventName)) {
+            Debug.LogWarning("Music clip is already playing");
             return;
         }
 
-        AudioManager.instance.musicInstance = FMODUnity.RuntimeManager.CreateInstance(eventName);
-        AudioManager.instance.musicInstance.start();
+        AudioManager.instance.musicInstances[eventName] = FMODUnity.RuntimeManager.CreateInstance(eventName);
+        AudioManager.instance.musicInstances[eventName].start();
     }
 
-    public static void StopMusic() {
-        if (!AudioManager.IsPlaying(AudioManager.instance.musicInstance)) {
-            Debug.LogWarning("Music is not playing");
+    public static void StopMusic(string eventName) {
+        if (!AudioManager.IsPlaying(eventName)) {
+            Debug.LogWarning("Music clip is not playing");
             return;
         }
 
-        AudioManager.instance.musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        AudioManager.instance.musicInstance.release();
+        AudioManager.instance.musicInstances[eventName].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        AudioManager.instance.musicInstances[eventName].release();
+        AudioManager.instance.musicInstances.Remove(eventName);
     }
 
-    // public static void PlaySoundScape(string eventName) {
-    //     if (AudioManager.IsPlaying(AudioManager.instance.musicInstance)) {
-    //         Debug.LogWarning("Music is already playing");
-    //         return;
-    //     }
-
-    //     AudioManager.instance.musicInstance = FMODUnity.RuntimeManager.CreateInstance(eventName);
-    //     AudioManager.instance.musicInstance.start();
-    // }
-
-    // public static void StopSoundScape() {
-    //     if (!AudioManager.IsPlaying(AudioManager.instance.musicInstance)) {
-    //         Debug.LogWarning("Music is not playing");
-    //         return;
-    //     }
-
-    //     AudioManager.instance.musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-    //     AudioManager.instance.musicInstance.release();
-    // }
+    public static bool IsPlaying(string eventName) {
+        if (!AudioManager.instance.musicInstances.ContainsKey(eventName)) return false;
+        return AudioManager.IsPlaying(AudioManager.instance.musicInstances[eventName]);
+    }
 
     public static bool IsPlaying(FMOD.Studio.EventInstance eventInstance) {
-	FMOD.Studio.PLAYBACK_STATE state;   
-	eventInstance.getPlaybackState(out state);
-	return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
-}
+        FMOD.Studio.PLAYBACK_STATE state;   
+        eventInstance.getPlaybackState(out state);
+        return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
+    }
 }

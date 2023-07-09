@@ -88,6 +88,7 @@ public class CharacterController : MonoBehaviour
         isFrenzied = true;
         walker.SetBalanceState(currentState);
 
+        AudioManager.StopMusic(GlobalVariables.MUSIC_MAIN_MENU);
         AudioManager.PlayMusic(GlobalVariables.SNAPSHOT_FRENZY);
     }
 
