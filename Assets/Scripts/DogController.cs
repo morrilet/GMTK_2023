@@ -7,12 +7,21 @@ public class DogController : MonoBehaviour
     public CharacterController characterController;
     public Animator localAnimator;
 
+    [Header("Movement")]
+
     public float maxSpeed;
     public AnimationCurve accelerationCurve;
     public float accelerationTime;
     public AnimationCurve decelerationCurve;
     public float decelerationTime;
     public float groundOffset;
+    public float maxSlopeAngle = 60.0f;
+
+    [Header("Collisions")]
+
+    public float collisionRadius;
+    public LayerMask collisionMask;
+
 
     private Rigidbody localRigidbody;
     private Vector3 velocity;
@@ -47,21 +56,35 @@ public class DogController : MonoBehaviour
 
     private void StickToGround() {
         // Get the height of the ground at the current location.
-        RaycastHit hit;
-        Physics.Raycast(localRigidbody.position + (Vector3.up * 1000f), Vector3.down, out hit, Mathf.Infinity, LayerMask.GetMask("Ground"));
-    
-        float groundHeight;
+        RaycastHit hit = GetGroundHit(localRigidbody.position);
+        
+        float groundHeight = 0.0f;
         if (hit.collider != null) {
             groundHeight = hit.point.y;
-        } else {
-            Debug.LogWarning("Unable to find ground.");
-            return;
         }
 
         // If the dog is below the ground, move it up.
         if (localRigidbody.position.y < groundHeight + groundOffset) {
             localRigidbody.position = new Vector3(localRigidbody.position.x, groundHeight + groundOffset, localRigidbody.position.z);
         }
+    }
+
+    private void HandleSlopes() {
+        RaycastHit hit = GetGroundHit(localRigidbody.position + (velocity * Time.deltaTime));
+
+        // Check the angle of the ground - if it's too steep we should simply stop moving.
+        if (Vector3.Angle(hit.normal, Vector3.up) > maxSlopeAngle) {
+            velocity = Vector3.zero;
+        }
+    }
+
+    private RaycastHit GetGroundHit(Vector3 position) {
+        RaycastHit hit;
+        Physics.Raycast(position + (Vector3.up * 1000f), Vector3.down, out hit, Mathf.Infinity, LayerMask.GetMask("Ground"));
+        if (hit.collider == null) {
+            Debug.LogWarning("Unable to find ground.");
+        }
+        return hit;
     }
 
     private void RotateTowardsInput() {
@@ -110,6 +133,15 @@ public class DogController : MonoBehaviour
         localAnimator.SetBool("Frenzy", characterController.isFrenzied);
     }
 
+    private void CheckCollisions() {
+        RaycastHit hit;
+        Physics.Raycast(localRigidbody.position, velocity.normalized, out hit, collisionRadius, collisionMask);
+        if (hit.collider != null) {
+            velocity = Vector3.zero;
+            // localRigidbody.position += (hit.point - localRigidbody.position).normalized * (hit.distance - collisionRadius);
+        }
+    }
+
     private void Update() {
         UpdateInputs();
         StickToGround();
@@ -122,6 +154,8 @@ public class DogController : MonoBehaviour
         if (!characterController.isFrenzied)
             ApplyLeashModifier();
         ApplyMinDistanceModifier();
+        CheckCollisions();
+        HandleSlopes();
 
         velocity.y = Physics.gravity.y;
         localRigidbody.position += velocity * Time.deltaTime;

@@ -14,14 +14,22 @@ public class NodeFollower : MonoBehaviour
 
     protected virtual void Start() {
         agent = GetComponent<NavMeshAgent>();
-        agent.destination = nodeMap.nodes[currentNode].position;
+
+        if (nodeMap != null)
+            agent.destination = nodeMap.nodes[currentNode].position;
     }
 
     public virtual void ReselectCurrentNode() {
+        if (nodeMap == null)
+            return;
+
         agent.destination = nodeMap.nodes[currentNode].position;
     }
 
     public virtual void NextNode() {
+        if (nodeMap == null)
+            return;
+
         if(currentNode == nodeMap.nodes.Length -1) {
             currentNode = 0;
         } else {
@@ -31,8 +39,19 @@ public class NodeFollower : MonoBehaviour
     }
 
     protected virtual void Update() {
-        if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f){
+        if (Vector3.Distance(transform.position, agent.destination) < 1.0f){
             NextNode();
         }
     }
+
+    // public void OnDrawGizmos() {
+    //     if (nodeMap == null && agent == null)
+    //         return;
+
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawLine(transform.position, nodeMap.nodes[currentNode].position);
+
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawLine(transform.position, agent.destination);
+    // }
 }

@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class FireHydrant : MonoBehaviour, IInteractable
 {
+    public GameObject emitters;
     [SerializeField] float hydrantTime = 8;
     float hydrantTimer = 0;
-
-    GameObject emitters;
-    // Start is called before the first frame update
-    void Start()
-    {
-        emitters = transform.GetChild(0).gameObject;
+    
+    void Start() {
+        emitters.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         hydrantTimer += Time.deltaTime;
 
         if(emitters.activeSelf && hydrantTimer >= hydrantTime){
@@ -24,7 +20,7 @@ public class FireHydrant : MonoBehaviour, IInteractable
         }
     }
 
-    public void Interact() {
+    public void Interact(InteractableTrigger obj) {
         if(!emitters.activeSelf){
             emitters.SetActive(true);
             AudioManager.PlayOneShot(GlobalVariables.SFX_FIRE_HYDRANT);

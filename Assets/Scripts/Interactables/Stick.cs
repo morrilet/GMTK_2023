@@ -4,19 +4,46 @@ using UnityEngine;
 
 public class Stick : MonoBehaviour, IInteractable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public Vector3 heldRotationOffset;
+    public GameObject tripTrigger;
+
+    InteractableTrigger carrier;
+    Rigidbody localRigidbody;
+    Collider localCollider;
+
+    private void Awake() {
+        localRigidbody = GetComponent<Rigidbody>();
+        localCollider = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void Interact(InteractableTrigger obj) {
+        localRigidbody.isKinematic = true;
+        localCollider.enabled = false;
+        obj.canInteract = false;
+        carrier = obj;
+        tripTrigger.SetActive(false);
     }
 
-    public void Interact() {
-        
+    private void Update() {
+        if (carrier != null) {
+            if (Input.GetButtonDown(GlobalVariables.INPUT_INTERACT)) {
+                Drop();
+            }
+        }
+    }
+
+    private void FixedUpdate() {
+        if (carrier != null) {
+            localRigidbody.position = carrier.transform.position;
+            localRigidbody.rotation = carrier.transform.rotation * Quaternion.Euler(heldRotationOffset);
+        }
+    }
+
+    private void Drop() {
+        carrier.canInteract = true;
+        localCollider.enabled = true;
+        localRigidbody.isKinematic = false;
+        carrier = null;
+        tripTrigger.SetActive(true);
     }
 }

@@ -6,7 +6,6 @@ public class Bark : MonoBehaviour
 {
     [SerializeField]float barkCooldown = .5f;
     float barkCooldownTimer;
-    bool buttonPrev = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,14 +18,11 @@ public class Bark : MonoBehaviour
     {
         barkCooldownTimer += Time.deltaTime;
 
-        if(Input.GetAxis("Bark") == 1) {
-            if(!buttonPrev && barkCooldownTimer > barkCooldown){
+        if(Input.GetButtonDown(GlobalVariables.INPUT_BARK)) {
+            if(barkCooldownTimer > barkCooldown){
                 barkCooldownTimer = 0;
                 AudioManager.PlayOneShot(GlobalVariables.SFX_DOG_BARK);
             }
-            buttonPrev = true;
-        } else {
-            buttonPrev = false;
         }
     }
 }

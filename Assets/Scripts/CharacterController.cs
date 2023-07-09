@@ -69,19 +69,23 @@ public class CharacterController : MonoBehaviour
             walker.SetBalanceState(currentState);
         }
 
-        // TEMPORARY FOR DEBUGGING
-        if (Input.GetKeyDown(KeyCode.T)) {
-            currentState = ActiveRagdoll.BalanceState.Falling;
-            faceDog = false;
-            walker.SetBalanceState(currentState);
-        }
-
         // TEMP TESTING
         // if (Input.GetKeyDown(KeyCode.T)) {
         //     anim_mesh.enabled = toggle;
         //     ragdoll_mesh.enabled = !toggle;
         //     toggle = !toggle;
         // }
+    }
+
+    public void TriggerFrenzy() {
+        if (isFrenzied) {
+            return;
+        }
+
+        currentState = ActiveRagdoll.BalanceState.Falling;
+        faceDog = false;
+        isFrenzied = true;
+        walker.SetBalanceState(currentState);
     }
 
     private void UpdateWalkerAnimator() {
@@ -165,7 +169,7 @@ public class CharacterController : MonoBehaviour
 
         UpdateWalkerAnimator();
 
-        Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        Vector3 input = new Vector3(Input.GetAxis(GlobalVariables.INPUT_HORIZONTAL), 0.0f, Input.GetAxis(GlobalVariables.INPUT_VERTICAL));
 
         if (faceDog) {
             walkerNodeFollower.agent.destination = GetDogTransform().position;

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8395404218733669443}
+  - component: {fileID: 7754266519686938647}
   m_Layer: 0
   m_Name: Line_O_Bricks
   m_TagString: Untagged
@@ -29,14 +30,35 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2717105678366639695}
-  - {fileID: 8126804368960083865}
+  - {fileID: 8593586041867743347}
   - {fileID: 2097900281926455218}
-  - {fileID: 6403795789559708520}
+  - {fileID: 6869224367921061004}
   - {fileID: 4239378678883116570}
   - {fileID: 7335633229749114758}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7754266519686938647
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629422625028594719}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.64193726, y: 0.72233236, z: 7.9661026}
+  m_Center: {x: 0, y: -0.008075774, z: -2.0182152}
 --- !u!1001 &1916145635012536409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -332,7 +354,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b32b35225695f0a4cac28b9dac590774, type: 3}
---- !u!4 &6403795789559708520 stripped
+--- !u!4 &6869224367921061004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b32b35225695f0a4cac28b9dac590774, type: 3}
   m_PrefabInstance: {fileID: 6403795789559708519}
@@ -484,7 +506,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b32b35225695f0a4cac28b9dac590774, type: 3}
---- !u!4 &8126804368960083865 stripped
+--- !u!4 &8593586041867743347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b32b35225695f0a4cac28b9dac590774, type: 3}
   m_PrefabInstance: {fileID: 8126804368960083864}

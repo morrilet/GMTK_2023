@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GlobalVariables : MonoBehaviour
 {
+    // MUSIC / SFX
+
     public static string MUSIC_MAIN_MENU = "event:/Music/main_theme";
 
     public static string SOUNDSCAPE_PARK_AMBIENCE = "event:/soundscape/ambience";
@@ -21,4 +23,11 @@ public class GlobalVariables : MonoBehaviour
     public static string SFX_LEASH_PULL = "event:/sound effects/leash_pull";
     public static string SFX_OWNER_BREATHING = "event:/sound effects/owner_breathing";
     public static string SFX_UI_CLICK = "event:/ui_sfx/ui_click";
+
+    // INPUTS
+
+    public static string INPUT_HORIZONTAL = "Horizontal";
+    public static string INPUT_VERTICAL = "Vertical";
+    public static string INPUT_INTERACT = "Interact";
+    public static string INPUT_BARK = "Bark";
 }

@@ -5,20 +5,21 @@ using UnityEngine;
 public class InteractableTrigger : MonoBehaviour
 {
     GameObject nearbyInteractable = null;
-    bool buttonPrev = false;
+
+    [HideInInspector] public bool canInteract = true;
+
+    bool canInteractPrev;
 
     void Update()
     {
-        if(nearbyInteractable != null) {
-            if(Input.GetAxis("Interact") == 1 && !buttonPrev){
-                nearbyInteractable.GetComponent<IInteractable>().Interact();
+        if(nearbyInteractable != null && canInteract && canInteractPrev) {
+            if(Input.GetButtonDown(GlobalVariables.INPUT_INTERACT)){
+                nearbyInteractable.GetComponent<IInteractable>().Interact(this);
                 AudioManager.PlayOneShot(GlobalVariables.SFX_UI_CLICK);
-                buttonPrev = true;
             }
         }
-        if(Input.GetAxis("Interact") != 1){
-            buttonPrev = false;
-        }
+
+        canInteractPrev = canInteract;
     }
 
     void OnTriggerEnter(Collider col) {
