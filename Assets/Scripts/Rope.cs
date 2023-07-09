@@ -123,8 +123,8 @@ public class Rope : MonoBehaviour
         lastSegmentRigidbody.position = anchor_2.position;
     }
 
-    // private void LateUpdate() {
-    //     vertices[0].position = anchor_1.position;
-    //     vertices[vertices.Count - 1].position = anchor_2.position;
-    // }
+    private void LateUpdate() {
+        vertices[0].position = anchor_1.position;
+        vertices[vertices.Count - 1].position = anchor_2.position;
+    }
 }
