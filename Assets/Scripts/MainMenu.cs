@@ -25,8 +25,7 @@ public class MainMenu : MonoBehaviour
     }
 
     public void Settings() {
-        mainMenu.SetActive(false);
-        settingsMenu.SetActive(true);
+        AudioManager.PlayOneShot(GlobalVariables.SFX_DOG_BARK);
     }
 
     public void BackToMain() {
