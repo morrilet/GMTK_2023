@@ -8,6 +8,7 @@ public class Stick : MonoBehaviour, IInteractable
     public GameObject tripTrigger;
 
     InteractableTrigger carrier;
+    GameObject attachPoint;
     Rigidbody localRigidbody;
     Collider localCollider;
 
@@ -21,6 +22,7 @@ public class Stick : MonoBehaviour, IInteractable
         localCollider.enabled = false;
         obj.canInteract = false;
         carrier = obj;
+        attachPoint = carrier.attachAnchor;
         tripTrigger.SetActive(false);
     }
 
@@ -32,10 +34,10 @@ public class Stick : MonoBehaviour, IInteractable
         }
     }
 
-    private void FixedUpdate() {
-        if (carrier != null) {
-            localRigidbody.position = carrier.transform.position;
-            localRigidbody.rotation = carrier.transform.rotation * Quaternion.Euler(heldRotationOffset);
+    private void Update() {
+        if (carrier != null && attachPoint != null) {
+            localRigidbody.position = attachPoint.transform.position;
+            localRigidbody.rotation = attachPoint.transform.rotation * Quaternion.Euler(heldRotationOffset);
         }
     }
 
@@ -44,6 +46,7 @@ public class Stick : MonoBehaviour, IInteractable
         localCollider.enabled = true;
         localRigidbody.isKinematic = false;
         carrier = null;
+        attachPoint = null;
         tripTrigger.SetActive(true);
     }
 }

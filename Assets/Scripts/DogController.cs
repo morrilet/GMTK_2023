@@ -10,6 +10,7 @@ public class DogController : MonoBehaviour
     [Header("Movement")]
 
     public float maxSpeed;
+    public float maxFrenzySpeed;
     public AnimationCurve accelerationCurve;
     public float accelerationTime;
     public AnimationCurve decelerationCurve;
@@ -112,15 +113,19 @@ public class DogController : MonoBehaviour
             velocity *= characterController.GetMinDistanceSpeedModifier(localRigidbody.position);
     }
 
+    private float GetMaxSpeed() {
+        return characterController.isFrenzied ? maxFrenzySpeed : maxSpeed;
+    }
+
     private void Accelerate() {
         float acceleration = accelerationCurve.Evaluate(Mathf.Clamp01(timer / accelerationTime));
-        float speed = Mathf.Clamp(acceleration * maxSpeed, 0.0f, maxSpeed);
+        float speed = Mathf.Clamp(acceleration * GetMaxSpeed(), 0.0f, GetMaxSpeed());
         velocity = new Vector3(input.x, 0f, input.y).normalized * speed;
     }
 
     private void Decelerate() {
         float deceleration = decelerationCurve.Evaluate(Mathf.Clamp01(timer / decelerationTime));
-        float speed = Mathf.Clamp(deceleration * maxSpeed, 0.0f, maxSpeed);
+        float speed = Mathf.Clamp(deceleration * GetMaxSpeed(), 0.0f, GetMaxSpeed());
         velocity = new Vector3(input.x, 0f, input.y).normalized * speed;
     }
 
@@ -129,7 +134,7 @@ public class DogController : MonoBehaviour
     }
 
     private void UpdateAnimator() {
-        localAnimator.SetFloat("Speed", Mathf.Clamp01(GetLinearVelocity() / maxSpeed));
+        localAnimator.SetFloat("Speed", Mathf.Clamp01(GetLinearVelocity() / GetMaxSpeed()));
         localAnimator.SetBool("Frenzy", characterController.isFrenzied);
     }
 

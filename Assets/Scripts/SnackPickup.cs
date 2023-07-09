@@ -13,6 +13,13 @@ public class SnackPickup : MonoBehaviour
     public float floatDistance = 1.0f;
     public float spinSpeed = 1.0f;
 
+    private float timer = 0.0f;
+    private float startY;
+    
+    private void Start() {
+        startY = pickupObject.transform.position.y + (floatDistance / 2.0f);
+    }
+
 
     private void OnTriggerEnter(Collider other) {
         if (playerLayer == (playerLayer | (1 << other.gameObject.layer))) {
@@ -26,9 +33,11 @@ public class SnackPickup : MonoBehaviour
     }
 
     private void FloatPickup() {
+        float sin = Mathf.Sin((timer * floatSpeed) * Mathf.Deg2Rad);
+
         pickupObject.transform.position = new Vector3(
             pickupObject.transform.position.x, 
-            pickupObject.transform.position.y + Mathf.Sin(Time.time * floatSpeed) * floatDistance, 
+            startY + sin * floatDistance,
             pickupObject.transform.position.z
         );
         pickupObject.transform.Rotate(Vector3.up, spinSpeed * Time.deltaTime);
@@ -36,5 +45,7 @@ public class SnackPickup : MonoBehaviour
 
     private void Update() {
         FloatPickup();
+
+        timer += Time.deltaTime;
     }
 }

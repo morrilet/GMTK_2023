@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour
     private void AssignInstance() {
         if (!instance) {
             instance = this;
+            GameObject.DontDestroyOnLoad(this);
         } else {
             GameObject.DestroyImmediate(this.gameObject);
         }
-        GameObject.DontDestroyOnLoad(this);
     }
 
     private void Awake() {
@@ -25,12 +25,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void AssignCamera(Camera cam) {
-        AssignInstance();  // Just in case this is called before Awake() by some other class.
+        // AssignInstance();  // Just in case this is called before Awake() by some other class.
         mainCamera = cam;
     }
 
     public void AssignCharacterController(CharacterController controller) {
-        AssignInstance();  // Just in case this is called before Awake() by some other class.
+        // AssignInstance();  // Just in case this is called before Awake() by some other class.
         characterController = controller;
     }
 

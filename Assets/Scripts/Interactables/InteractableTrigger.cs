@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InteractableTrigger : MonoBehaviour
 {
+    public GameObject attachAnchor;
+    
     GameObject nearbyInteractable = null;
 
     [HideInInspector] public bool canInteract = true;
