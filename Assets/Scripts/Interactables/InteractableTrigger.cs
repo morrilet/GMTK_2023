@@ -12,6 +12,7 @@ public class InteractableTrigger : MonoBehaviour
         if(nearbyInteractable != null) {
             if(Input.GetAxis("Interact") == 1 && !buttonPrev){
                 nearbyInteractable.GetComponent<IInteractable>().Interact();
+                AudioManager.PlayOneShot(GlobalVariables.SFX_UI_CLICK);
                 buttonPrev = true;
             }
         }

@@ -25,7 +25,10 @@ public class FireHydrant : MonoBehaviour, IInteractable
     }
 
     public void Interact() {
-        emitters.SetActive(true);
-        AudioManager.PlayOneShot(GlobalVariables.SFX_FIRE_HYDRANT);
+        if(!emitters.activeSelf){
+            emitters.SetActive(true);
+            AudioManager.PlayOneShot(GlobalVariables.SFX_FIRE_HYDRANT);
+            hydrantTimer = 0;
+        }
     }
 }
