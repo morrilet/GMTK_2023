@@ -28,7 +28,7 @@ public class Camera : MonoBehaviour
     {
         frenzied = GameManager.instance.characterController.isFrenzied;
 
-        breatheCounter += Time.deltaTime / 2;
+        breatheCounter += Time.deltaTime / 6;
 
         if(frenzied && cam.m_Lens.OrthographicSize < max + (breatheCurve.Evaluate(breatheCounter) * breathScale)){
             cam.m_Lens.OrthographicSize += zoomSpeed * Time.deltaTime;
