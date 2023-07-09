@@ -18,10 +18,10 @@ public class AudioManager : MonoBehaviour
     }
 
     private void Start() {
-        PlayMusic(GlobalVariables.MUSIC_MAIN_MENU);
+        // PlayMusic(GlobalVariables.MUSIC_MAIN_MENU);
     }
 
-    public void PlayOneShot(string eventName, GameObject obj) {
+    public static void PlayOneShot(string eventName, GameObject obj) {
         FMOD.Studio.EventInstance eventInstance = FMODUnity.RuntimeManager.CreateInstance(eventName);
         if (obj != null) {
             eventInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(obj));
@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
     }
 
     public static void PlayOneShot(string eventName) {
-        AudioManager.instance.PlayOneShot(eventName, null);
+        AudioManager.PlayOneShot(eventName, null);
     }
 
     public static void PlayMusic(string eventName) {
