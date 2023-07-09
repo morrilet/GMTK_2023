@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="ParameterPreset" id="{b7134127-8236-44e5-9f21-9a1f91644be7}">
+		<property name="name">
+			<value>frenzy</value>
+		</property>
+		<relationship name="folder">
+			<destination>{48f80e42-c1e7-46a1-81f0-1232a7e0ca0f}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{2cf21397-b89a-417b-a2e5-a393b4c5cdce}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{2cf21397-b89a-417b-a2e5-a393b4c5cdce}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

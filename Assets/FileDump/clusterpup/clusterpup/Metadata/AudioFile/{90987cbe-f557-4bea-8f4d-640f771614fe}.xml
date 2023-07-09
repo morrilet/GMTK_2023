@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{90987cbe-f557-4bea-8f4d-640f771614fe}">
+		<property name="assetPath">
+			<value>conductor_steps_v5.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.38208333333333333</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{9300e96d-2d29-4347-b9b8-1920e0ba6107}</destination>
+		</relationship>
+	</object>
+</objects>
