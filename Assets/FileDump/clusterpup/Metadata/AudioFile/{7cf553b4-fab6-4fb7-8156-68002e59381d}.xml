@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{7cf553b4-fab6-4fb7-8156-68002e59381d}">
+		<property name="assetPath">
+			<value>Music/transition fanfare.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>4.9178684807256232</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{9300e96d-2d29-4347-b9b8-1920e0ba6107}</destination>
+		</relationship>
+	</object>
+</objects>

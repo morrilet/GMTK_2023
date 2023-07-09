@@ -30,11 +30,9 @@ public class Camera : MonoBehaviour
 
         breatheCounter += Time.deltaTime / 6;
 
-        if(frenzied && cam.m_Lens.OrthographicSize < max + (breatheCurve.Evaluate(breatheCounter) * breathScale)){
+        if(frenzied && cam.m_Lens.OrthographicSize < max){
             cam.m_Lens.OrthographicSize += zoomSpeed * Time.deltaTime;
-        } else if (frenzied && cam.m_Lens.OrthographicSize > max + (breatheCurve.Evaluate(breatheCounter) * breathScale)) {
-            cam.m_Lens.OrthographicSize -= zoomSpeed * Time.deltaTime;
-        } else if (!frenzied && cam.m_Lens.OrthographicSize > min) {
+        }  else if (!frenzied && cam.m_Lens.OrthographicSize > min) {
             cam.m_Lens.OrthographicSize -= zoomSpeed * Time.deltaTime;
         }
     }

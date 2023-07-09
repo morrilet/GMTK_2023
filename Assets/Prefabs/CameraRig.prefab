@@ -385,7 +385,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 0
     m_RotationOrder: 4
-  breathScale: 3
+  breathScale: 7
   zoomSpeed: 10
   min: 7
   max: 10
