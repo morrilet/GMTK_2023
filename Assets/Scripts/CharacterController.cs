@@ -23,24 +23,48 @@ public class CharacterController : MonoBehaviour
 
     private bool faceDog = false;
     private bool faceDogPrev = false;
+    private float stamina = 0.0f;
     private ActiveRagdoll.BalanceState currentState = ActiveRagdoll.BalanceState.Balanced;
+
+    private void Awake() {
+        stamina = maxStamina;
+    }
 
     private void UpdateState() {
 
-        if (DogOutsideRange()) {
+        if (DogAtMaxRange()) {
             currentState = ActiveRagdoll.BalanceState.Unbalanced;
             faceDog = true;
             walker.SetBalanceState(currentState);
-        } 
-        else {
+        }
+        else if (DogAtComfortableRange() || stamina <= 0.0f) {
             currentState = ActiveRagdoll.BalanceState.Balanced;
+            faceDog = false;
+            walker.SetBalanceState(currentState);
+        }
+
+        if (Input.GetKeyDown(KeyCode.T)) {
+            currentState = ActiveRagdoll.BalanceState.Falling;
             faceDog = false;
             walker.SetBalanceState(currentState);
         }
     }
 
-    private bool DogOutsideRange() {
-        return Vector3.Distance(GetWalkerTransform().position, GetDogTransform().position) > maxDistance;
+    private void UpdateStamina() {
+        if (currentState == ActiveRagdoll.BalanceState.Unbalanced) {
+            stamina = Mathf.Clamp(stamina - staminaDrainRate * Time.deltaTime, 0.0f, maxStamina);
+        } else if (currentState == ActiveRagdoll.BalanceState.Balanced) {
+            stamina = Mathf.Clamp(stamina + staminaRegenRate * Time.deltaTime, 0.0f, maxStamina);
+        }
+    }
+
+    private bool DogAtMaxRange(float tolerance = 0.5f) {
+        // Include a tolerance just so we don't have to be exactly at the max distance to be considered at max range.
+        return Vector3.Distance(GetWalkerTransform().position, GetDogTransform().position) >= maxPullDistance - tolerance;
+    }
+
+    private bool DogAtComfortableRange() {
+        return Vector3.Distance(GetWalkerTransform().position, GetDogTransform().position) <= maxDistance;
     }
 
     // Evaluates the distance of the position between the max distance and the max pull distance and
@@ -69,6 +93,7 @@ public class CharacterController : MonoBehaviour
 
     private void Update() {
         UpdateState();
+        UpdateStamina();
 
         Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
 

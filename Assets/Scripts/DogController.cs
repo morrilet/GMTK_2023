@@ -19,7 +19,7 @@ public class DogController : MonoBehaviour
 
     private void Awake() {
         localRigidbody = GetComponent<Rigidbody>();
-        localRigidbody.isKinematic = true;
+        // localRigidbody.isKinematic = true;
         velocity = Vector3.zero;
         input = Vector2.zero;
         timer = 0f;
@@ -43,6 +43,25 @@ public class DogController : MonoBehaviour
         } else {
             timer = Mathf.Clamp(timer + Time.deltaTime, 0f, Mathf.Max(accelerationTime, decelerationTime));
             Accelerate();
+        }
+    }
+
+    private void StickToGround() {
+        // Get the height of the ground at the current location.
+        RaycastHit hit;
+        Physics.Raycast(localRigidbody.position + (Vector3.up * 1000f), Vector3.down, out hit, Mathf.Infinity, LayerMask.GetMask("Ground"));
+    
+        float groundHeight;
+        if (hit.collider != null) {
+            groundHeight = hit.point.y;
+        } else {
+            Debug.LogWarning("Unable to find ground.");
+            return;
+        }
+
+        // If the dog is below the ground, move it up.
+        if (localRigidbody.position.y < groundHeight) {
+            localRigidbody.position = new Vector3(localRigidbody.position.x, groundHeight, localRigidbody.position.z);
         }
     }
 
@@ -76,10 +95,15 @@ public class DogController : MonoBehaviour
 
     private void Update() {
         UpdateInputs();
+        StickToGround();
+    }
+
+    private void FixedUpdate() {
         UpdateVelocity();
         ApplyLeashModifier();
         ApplyMinDistanceModifier();
 
+        velocity.y = Physics.gravity.y;
         localRigidbody.position += velocity * Time.deltaTime;
     }
 }

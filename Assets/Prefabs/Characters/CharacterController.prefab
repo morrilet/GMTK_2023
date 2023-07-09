@@ -159,7 +159,7 @@ Transform:
   - {fileID: 7596939789249591783}
   - {fileID: 7732997599528913003}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3695927847395487568
 MonoBehaviour:
@@ -177,8 +177,8 @@ MonoBehaviour:
   walkerNodeFollower: {fileID: 5095480813051271728}
   dog: {fileID: 48140427641682396}
   minDistance: 0.8
-  maxDistance: 4
-  maxPullDistance: 6
+  maxDistance: 6
+  maxPullDistance: 10
   distanceSpeedModifierCurve:
     serializedVersion: 2
     m_Curve:
@@ -771,7 +771,9 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5729593276851217397, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
+    - {fileID: 8118833025114666363, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7743592532096706727, guid: b4fe726d665fcec40a8edffd35f33029, type: 3}
       insertIndex: -1
@@ -1017,7 +1019,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8173644591507792486}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1026,8 +1028,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
+  m_Height: 1.85
+  m_BaseOffset: -0.15
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &5095480813051271728
@@ -1045,7 +1047,7 @@ MonoBehaviour:
   nodeMap: {fileID: 0}
   agent: {fileID: 0}
   characterController: {fileID: 3695927847395487568}
-  maxSpeed: 1
+  maxSpeed: 2.5
   slowCurve:
     serializedVersion: 2
     m_Curve:
@@ -1151,7 +1153,8 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -1840379143865339317, guid: edc55176fcf79f94b86b04cd98456112, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: edc55176fcf79f94b86b04cd98456112, type: 3}
       insertIndex: 0
@@ -1172,6 +1175,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: edc55176fcf79f94b86b04cd98456112, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8865390691818262401}
+    - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: edc55176fcf79f94b86b04cd98456112, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1861661902060400939}
   m_SourcePrefab: {fileID: 100100000, guid: edc55176fcf79f94b86b04cd98456112, type: 3}
 --- !u!1 &51650140896508443 stripped
 GameObject:
@@ -1195,7 +1201,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.013446181
   m_Height: 0.0606656
@@ -1218,10 +1224,33 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.005985194
   m_Center: {x: 0, y: 0.045, z: 0.022993231}
+--- !u!136 &1861661902060400939
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51650140896508443}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03171945
+  m_Height: 0.08862722
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.015759401, z: -0.003539827}
 --- !u!1 &574901483438552366 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: edc55176fcf79f94b86b04cd98456112, type: 3}
@@ -1252,7 +1281,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &48140427641682396
 MonoBehaviour:
@@ -1267,7 +1296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 3695927847395487568}
-  maxSpeed: 3
+  maxSpeed: 4
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -1351,6 +1380,10 @@ PrefabInstance:
       propertyPath: m_Positions.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 285645685721548410, guid: 37dc0c5fcd4822248948756ab84add0f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c194a6c31adb95b4d97bd6dd5d3e1780, type: 2}
     - target: {fileID: 3764476300298730467, guid: 37dc0c5fcd4822248948756ab84add0f, type: 3}
       propertyPath: m_Name
       value: Rope

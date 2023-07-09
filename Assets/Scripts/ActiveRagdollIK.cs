@@ -13,6 +13,10 @@ public class ActiveRagdollIK : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    // public void SetRightHandTarget(Transform target) {
+    //     rightHandTarget = target;
+    // }
+
     private void OnAnimatorIK() {
         if (animator) {
             if (rightHandTarget != null) {

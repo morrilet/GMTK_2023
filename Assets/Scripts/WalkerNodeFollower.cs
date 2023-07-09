@@ -32,5 +32,8 @@ public class WalkerNodeFollower : NodeFollower
         // This does allow the walker to move a little too far away because of 
         // carry-over velocity, but fixing it is too much hassle right now.
         agent.speed = maxSpeed * GetMovementModifier();
+
+        if (agent.velocity.magnitude > agent.speed)
+            agent.velocity = agent.velocity.normalized * agent.speed;
     }
 }
