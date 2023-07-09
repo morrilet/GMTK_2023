@@ -14,6 +14,11 @@ public class Camera : MonoBehaviour
     public bool frenzied = false;
     CinemachineVirtualCamera cam;
     // Start is called before the first frame update
+
+    void Awake() {
+        GameManager.instance.AssignCamera(this);
+    }
+
     void Start()
     {
         cam = GetComponent<CinemachineVirtualCamera>();
@@ -23,6 +28,8 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        frenzied = GameManager.instance.characterController.isFrenzied;
+
         breatheCounter += Time.deltaTime / 2;
 
         if(frenzied && cam.m_Lens.OrthographicSize < max + (breatheCurve.Evaluate(breatheCounter) * breathScale)){
