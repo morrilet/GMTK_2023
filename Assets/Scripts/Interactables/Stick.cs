@@ -32,9 +32,7 @@ public class Stick : MonoBehaviour, IInteractable
                 Drop();
             }
         }
-    }
 
-    private void Update() {
         if (carrier != null && attachPoint != null) {
             localRigidbody.position = attachPoint.transform.position;
             localRigidbody.rotation = attachPoint.transform.rotation * Quaternion.Euler(heldRotationOffset);

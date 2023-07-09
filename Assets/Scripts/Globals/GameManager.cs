@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public Camera mainCamera;
     [HideInInspector] public CharacterController characterController;
 
-    private int score = 0;
+    public int score = 0;
 
     private void AssignInstance() {
         if (!instance) {

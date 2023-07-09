@@ -44,6 +44,10 @@ public class NodeFollower : MonoBehaviour
         }
     }
 
+    public bool LastNode() {
+        return currentNode == nodeMap.nodes.Length - 1;
+    }
+
     // public void OnDrawGizmos() {
     //     if (nodeMap == null && agent == null)
     //         return;

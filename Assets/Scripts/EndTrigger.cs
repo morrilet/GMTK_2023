@@ -7,11 +7,14 @@ public class EndTrigger : MonoBehaviour
 {
     [SerializeField]GameObject canvasObj;
     [SerializeField]TMP_Text scoreText;
+    [SerializeField]LayerMask playerLayer; // [PLACEHOLDER
+
     // Start is called before the first frame update
     void OnTriggerEnter(Collider col) {
-        if (col.gameObject.layer == 7) {
+        if (playerLayer == (playerLayer | (1 << col.gameObject.layer))) {
+            if (GameManager.instance.characterController.walkerNodeFollower.LastNode())
             canvasObj.SetActive(true);
-            scoreText.text = "You managed to gobble [PLACEHOLDER] pieces of toast! Wow!";
+            scoreText.text = $"You managed to gobble {GameManager.instance.score} pieces of toast! Wow!";
         }
     }
 }
